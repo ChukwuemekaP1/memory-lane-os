@@ -18,6 +18,7 @@ import {
 
 import { BrandMark } from "@/components/brand-mark";
 import { buildSpaceBottomTabs, MobileBottomNav } from "@/components/mobile-bottom-nav";
+import { ThemeToggle } from "@/components/theme-toggle";
 import { SiteHeader } from "@/components/site-header";
 import { motion } from "@/components/ui/motion";
 import { coverForOccasion, occasionLabel, themeClassForTokens } from "@/lib/covers";
@@ -143,6 +144,7 @@ export function SpaceProvider({
               )}
             </div>
             <div className="flex items-center gap-2">
+              <ThemeToggle />
               {isStaff ? (
                 <>
                   <Link

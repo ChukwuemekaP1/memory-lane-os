@@ -2,34 +2,134 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Editorial Warm OKLCH Design System + Tactile Glassmorphism */
+/* ==========================================================================
+   Editorial Warm OKLCH Design System + Light / Candlelit Dark Glassmorphism
+   Follows modern-web-guidance `dark-mode`, `dark-mode-toggle`, and
+   `autofill-highlight-inputs`.
+   ========================================================================== */
+
 :root {
-  --background: oklch(0.985 0.009 85);        /* Warm linen white */
-  --foreground: oklch(0.235 0.029 149);       /* Deep ink charcoal */
-  --card: oklch(0.996 0.005 85);              /* Clean cream card surface */
+  /* MANDATORY: Automatically adapt native browser UI (scrollbars, form controls, canvas) */
+  color-scheme: light dark;
+
+  /* Reflect <meta name="color-scheme"> override back onto :root per dark-mode-toggle */
+  &:has(> head > meta[name="color-scheme"][content="dark"]) {
+    color-scheme: dark;
+  }
+  &:has(> head > meta[name="color-scheme"][content="light"]) {
+    color-scheme: light;
+  }
+
+  /* --- Raw Light Palette (Warm Paper & Woodland Green) --- */
+  --bg-light: oklch(0.985 0.009 85);
+  --fg-light: oklch(0.225 0.029 149);
+  --card-light: oklch(0.996 0.005 85);
+  --primary-light: oklch(0.32 0.062 151);
+  --primary-fg-light: oklch(0.984 0.013 91);
+  --secondary-light: oklch(0.947 0.021 85);
+  --muted-light: oklch(0.951 0.013 81);
+  --muted-fg-light: oklch(0.43 0.025 128);
+  --border-light: oklch(0.885 0.019 86);
+  --ring-light: oklch(0.46 0.072 146);
+  --paper-light: oklch(0.978 0.02 82);
+  --gold-light: oklch(0.848 0.075 85);
+  --bronze-light: oklch(0.45 0.078 64);
+  --sage-light: oklch(0.91 0.045 140);
+  --rose-light: oklch(0.92 0.045 40);
+  --marigold-light: oklch(0.92 0.065 87);
+  --glass-specular-light: rgba(255, 255, 255, 0.72);
+
+  /* --- Raw Dark Palette (Candlelit Forest Obsidian & Antique Gold) --- */
+  --bg-dark: oklch(0.17 0.016 148);
+  --fg-dark: oklch(0.945 0.014 85);
+  --card-dark: oklch(0.22 0.019 148);
+  --primary-dark: oklch(0.77 0.082 145);
+  --primary-fg-dark: oklch(0.155 0.022 148);
+  --secondary-dark: oklch(0.255 0.02 148);
+  --muted-dark: oklch(0.24 0.017 148);
+  --muted-fg-dark: oklch(0.75 0.02 120);
+  --border-dark: oklch(0.32 0.022 148);
+  --ring-dark: oklch(0.77 0.082 145);
+  --paper-dark: oklch(0.2 0.018 148);
+  --gold-dark: oklch(0.84 0.085 84);
+  --bronze-dark: oklch(0.8 0.082 76);
+  --sage-dark: oklch(0.285 0.042 145);
+  --rose-dark: oklch(0.285 0.042 38);
+  --marigold-dark: oklch(0.295 0.048 82);
+  --glass-specular-dark: rgba(255, 255, 255, 0.08);
+
+  /* --- Default Fallback (Light) for older browsers without light-dark() --- */
+  --background: var(--bg-light);
+  --foreground: var(--fg-light);
+  --card: var(--card-light);
   --card-foreground: var(--foreground);
-  --primary: oklch(0.32 0.062 151);           /* Deep woodland green */
-  --primary-foreground: oklch(0.984 0.013 91);/* Cream text on green */
-  --secondary: oklch(0.947 0.021 85);         /* Soft paper neutral */
-  --muted: oklch(0.951 0.013 81);             /* Muted subtle fill */
-  --muted-foreground: oklch(0.458 0.025 128); /* Muted slate text */
-  --border: oklch(0.897 0.019 86);            /* Delicate card border */
+  --primary: var(--primary-light);
+  --primary-foreground: var(--primary-fg-light);
+  --secondary: var(--secondary-light);
+  --muted: var(--muted-light);
+  --muted-foreground: var(--muted-fg-light);
+  --border: var(--border-light);
   --input: var(--border);
-  --ring: oklch(0.54 0.067 146);              /* Accessible focus green */
+  --ring: var(--ring-light);
+  --paper: var(--paper-light);
+  --gold: var(--gold-light);
+  --bronze: var(--bronze-light);
+  --shadow-ink: oklch(0.13 0.032 142);
+  --sage: var(--sage-light);
+  --rose: var(--rose-light);
+  --marigold: var(--marigold-light);
+  --glass-specular: var(--glass-specular-light);
 
-  /* Emotional Accent Palettes */
-  --paper: oklch(0.978 0.02 82);
-  --gold: oklch(0.848 0.075 85);
-  --bronze: oklch(0.475 0.076 64);
-  --shadow-ink: oklch(0.14 0.036 142);        /* Deep photo overlay */
+  /* MANDATORY fallback media query for browsers without light-dark() */
+  @media (prefers-color-scheme: dark) {
+    --background: var(--bg-dark);
+    --foreground: var(--fg-dark);
+    --card: var(--card-dark);
+    --primary: var(--primary-dark);
+    --primary-foreground: var(--primary-fg-dark);
+    --secondary: var(--secondary-dark);
+    --muted: var(--muted-dark);
+    --muted-foreground: var(--muted-fg-dark);
+    --border: var(--border-dark);
+    --ring: var(--ring-dark);
+    --paper: var(--paper-dark);
+    --gold: var(--gold-dark);
+    --bronze: var(--bronze-dark);
+    --sage: var(--sage-dark);
+    --rose: var(--rose-dark);
+    --marigold: var(--marigold-dark);
+    --glass-specular: var(--glass-specular-dark);
+  }
 
-  /* Space Theme Tints */
-  --sage: oklch(0.91 0.045 140);              /* Botanical */
-  --rose: oklch(0.92 0.045 40);               /* Terracotta */
-  --marigold: oklch(0.92 0.065 87);           /* Golden Hour */
+  /* Automatic adaptation via CSS light-dark() when supported */
+  @supports (color: light-dark(white, black)) {
+    --background: light-dark(var(--bg-light), var(--bg-dark));
+    --foreground: light-dark(var(--fg-light), var(--fg-dark));
+    --card: light-dark(var(--card-light), var(--card-dark));
+    --primary: light-dark(var(--primary-light), var(--primary-dark));
+    --primary-foreground: light-dark(var(--primary-fg-light), var(--primary-fg-dark));
+    --secondary: light-dark(var(--secondary-light), var(--secondary-dark));
+    --muted: light-dark(var(--muted-light), var(--muted-dark));
+    --muted-foreground: light-dark(var(--muted-fg-light), var(--muted-fg-dark));
+    --border: light-dark(var(--border-light), var(--border-dark));
+    --ring: light-dark(var(--ring-light), var(--ring-dark));
+    --paper: light-dark(var(--paper-light), var(--paper-dark));
+    --gold: light-dark(var(--gold-light), var(--gold-dark));
+    --bronze: light-dark(var(--bronze-light), var(--bronze-dark));
+    --sage: light-dark(var(--sage-light), var(--sage-dark));
+    --rose: light-dark(var(--rose-light), var(--rose-dark));
+    --marigold: light-dark(var(--marigold-light), var(--marigold-dark));
+    --glass-specular: light-dark(var(--glass-specular-light), var(--glass-specular-dark));
+  }
+
   --space-tint: var(--sage);
-
   --radius: 0.75rem;
+
+  /* Native form & scrollbar tinting */
+  accent-color: var(--primary);
+  --scrollbar-track: var(--background);
+  --scrollbar-thumb: color-mix(in oklab, var(--muted-foreground) 55%, var(--background));
+  scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
 
   /* Backwards-compatible space runtime tokens */
   --ml-accent: var(--primary);
@@ -37,19 +137,62 @@
   --ml-font: var(--font-sans);
 }
 
+/* Explicit data-theme attribute fallback for browsers without :has(> head > meta) */
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --background: var(--bg-dark);
+  --foreground: var(--fg-dark);
+  --card: var(--card-dark);
+  --primary: var(--primary-dark);
+  --primary-foreground: var(--primary-fg-dark);
+  --secondary: var(--secondary-dark);
+  --muted: var(--muted-dark);
+  --muted-foreground: var(--muted-fg-dark);
+  --border: var(--border-dark);
+  --ring: var(--ring-dark);
+  --paper: var(--paper-dark);
+  --gold: var(--gold-dark);
+  --bronze: var(--bronze-dark);
+  --sage: var(--sage-dark);
+  --rose: var(--rose-dark);
+  --marigold: var(--marigold-dark);
+  --glass-specular: var(--glass-specular-dark);
+}
+
+:root[data-theme="light"] {
+  color-scheme: light;
+  --background: var(--bg-light);
+  --foreground: var(--fg-light);
+  --card: var(--card-light);
+  --primary: var(--primary-light);
+  --primary-foreground: var(--primary-fg-light);
+  --secondary: var(--secondary-light);
+  --muted: var(--muted-light);
+  --muted-foreground: var(--muted-fg-light);
+  --border: var(--border-light);
+  --ring: var(--ring-light);
+  --paper: var(--paper-light);
+  --gold: var(--gold-light);
+  --bronze: var(--bronze-light);
+  --sage: var(--sage-light);
+  --rose: var(--rose-light);
+  --marigold: var(--marigold-light);
+  --glass-specular: var(--glass-specular-light);
+}
+
 .theme-Botanical {
   --space-tint: var(--sage);
-  --ml-accent: oklch(0.32 0.062 151);
+  --ml-accent: var(--primary);
 }
 
 .theme-Terracotta {
   --space-tint: var(--rose);
-  --ml-accent: oklch(0.475 0.076 64);
+  --ml-accent: var(--bronze);
 }
 
 .theme-Golden-Hour {
   --space-tint: var(--marigold);
-  --ml-accent: oklch(0.46 0.09 75);
+  --ml-accent: var(--gold);
 }
 
 body {
@@ -60,6 +203,17 @@ body {
     radial-gradient(at 50% 96%, color-mix(in oklab, var(--rose) 18%, transparent) 0px, transparent 50%);
   background-attachment: fixed;
   color: var(--foreground);
+}
+
+/* Adapt translucent white utility surfaces in dark mode so cards/inputs remain rich & legible */
+:root[data-theme="dark"] [class*="bg-white/"],
+:root:has(> head > meta[name="color-scheme"][content="dark"]) [class*="bg-white/"] {
+  background-color: color-mix(in oklab, var(--card) 82%, transparent) !important;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) [class*="bg-white/"] {
+    background-color: color-mix(in oklab, var(--card) 82%, transparent) !important;
+  }
 }
 
 /* Typography helpers */
@@ -85,14 +239,14 @@ body {
   }
 }
 
-/* Atmospheric hero & space cover bands */
+/* Atmospheric hero & space cover bands (always dark photography backdrop) */
 .home-hero,
 .cover-band {
   position: relative;
   isolation: isolate;
   overflow: hidden;
   background: var(--shadow-ink);
-  color: var(--primary-foreground);
+  color: oklch(0.984 0.013 91);
 }
 
 .home-hero > img.cover-img,
@@ -119,65 +273,66 @@ body {
   z-index: -1;
   background: linear-gradient(
     95deg,
-    color-mix(in oklab, var(--shadow-ink) 84%, transparent) 0%,
-    color-mix(in oklab, var(--shadow-ink) 56%, transparent) 48%,
-    color-mix(in oklab, var(--shadow-ink) 26%, transparent) 100%
+    color-mix(in oklab, var(--shadow-ink) 86%, transparent) 0%,
+    color-mix(in oklab, var(--shadow-ink) 58%, transparent) 48%,
+    color-mix(in oklab, var(--shadow-ink) 28%, transparent) 100%
   );
 }
 
 /* Warm Tactile Glassmorphism Surfaces */
-.glass-panel {
-  background: color-mix(in oklab, var(--card) 72%, transparent);
+.glass-panel,
+.glass-bar {
+  background: color-mix(in oklab, var(--card) 76%, transparent);
   backdrop-filter: blur(18px) saturate(140%);
   -webkit-backdrop-filter: blur(18px) saturate(140%);
-  border: 1px solid color-mix(in oklab, var(--card) 65%, var(--border));
+  border: 1px solid color-mix(in oklab, var(--card) 55%, var(--border));
   box-shadow:
-    0 1px 0 0 rgba(255, 255, 255, 0.72) inset,
-    0 12px 32px -12px color-mix(in oklab, var(--shadow-ink) 14%, transparent);
+    0 1px 0 0 var(--glass-specular) inset,
+    0 12px 32px -12px color-mix(in oklab, var(--shadow-ink) 22%, transparent);
 }
 
 .glass-nav {
-  background: color-mix(in oklab, var(--background) 78%, transparent);
+  background: color-mix(in oklab, var(--background) 80%, transparent);
   backdrop-filter: blur(20px) saturate(150%);
   -webkit-backdrop-filter: blur(20px) saturate(150%);
-  border-bottom: 1px solid color-mix(in oklab, var(--border) 75%, transparent);
+  border-bottom: 1px solid color-mix(in oklab, var(--border) 78%, transparent);
 }
 
 .glass-dark {
-  background: color-mix(in oklab, var(--shadow-ink) 56%, transparent);
+  background: color-mix(in oklab, var(--shadow-ink) 58%, transparent);
   backdrop-filter: blur(18px) saturate(135%);
   -webkit-backdrop-filter: blur(18px) saturate(135%);
   border: 1px solid rgba(255, 255, 255, 0.16);
   box-shadow:
     0 1px 0 0 rgba(255, 255, 255, 0.14) inset,
     0 16px 40px -16px rgba(0, 0, 0, 0.45);
-  color: var(--primary-foreground);
+  color: oklch(0.984 0.013 91);
 }
 
 .glass-pill {
-  background: color-mix(in oklab, var(--card) 68%, transparent);
+  background: color-mix(in oklab, var(--card) 72%, transparent);
   backdrop-filter: blur(12px) saturate(130%);
   -webkit-backdrop-filter: blur(12px) saturate(130%);
-  border: 1px solid color-mix(in oklab, var(--border) 80%, transparent);
+  border: 1px solid color-mix(in oklab, var(--border) 85%, transparent);
   transition: transform 0.2s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .glass-pill:hover {
   border-color: var(--ring);
-  background: color-mix(in oklab, var(--card) 88%, transparent);
+  background: color-mix(in oklab, var(--card) 92%, transparent);
 }
 
 /* Tactile Editorial Cards & Form Fields */
 .space-card {
-  background: color-mix(in oklab, var(--card) 78%, transparent);
+  background: color-mix(in oklab, var(--card) 82%, transparent);
   backdrop-filter: blur(16px) saturate(135%);
   -webkit-backdrop-filter: blur(16px) saturate(135%);
-  border: 1px solid color-mix(in oklab, var(--card) 60%, var(--border));
+  border: 1px solid color-mix(in oklab, var(--card) 55%, var(--border));
   border-radius: var(--radius);
   overflow: hidden;
   box-shadow:
-    0 1px 0 0 rgba(255, 255, 255, 0.7) inset,
-    0 10px 28px -14px color-mix(in oklab, var(--shadow-ink) 14%, transparent);
+    0 1px 0 0 var(--glass-specular) inset,
+    0 10px 28px -14px color-mix(in oklab, var(--shadow-ink) 18%, transparent);
   transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.25s ease, box-shadow 0.25s ease;
 }
 
@@ -185,8 +340,8 @@ body {
   transform: translateY(-4px);
   border-color: color-mix(in oklab, var(--ring) 70%, transparent);
   box-shadow:
-    0 1px 0 0 rgba(255, 255, 255, 0.85) inset,
-    0 20px 42px -18px color-mix(in oklab, var(--shadow-ink) 22%, transparent);
+    0 1px 0 0 var(--glass-specular) inset,
+    0 20px 42px -18px color-mix(in oklab, var(--shadow-ink) 26%, transparent);
 }
 
 .field {
@@ -203,21 +358,62 @@ body {
   width: 100%;
   border: 1px solid var(--input);
   border-radius: var(--radius);
-  background: color-mix(in oklab, var(--card) 86%, transparent);
+  background: color-mix(in oklab, var(--card) 88%, transparent);
   backdrop-filter: blur(8px);
   padding: 0.72rem 0.9rem;
+  font-size: 1rem; /* >=16px prevents mobile virtual keyboard auto-zoom */
   font-weight: 400;
   color: var(--foreground);
   transition: border-color 0.18s ease, box-shadow 0.18s ease, background-color 0.18s ease;
 }
 
+.field input::placeholder,
+.field textarea::placeholder {
+  color: color-mix(in oklab, var(--muted-foreground) 75%, transparent);
+}
+
 .field input:focus,
 .field textarea:focus,
-.field select:focus {
+.field select:focus,
+.field input:focus-visible,
+.field textarea:focus-visible,
+.field select:focus-visible {
   outline: none;
   border-color: var(--ring);
   background: var(--card);
-  box-shadow: 0 0 0 3px color-mix(in oklab, var(--ring) 22%, transparent);
+  box-shadow: 0 0 0 3px color-mix(in oklab, var(--ring) 25%, transparent);
+}
+
+/* Modern Web Guidance `autofill-highlight-inputs`:
+   Non-color thicker inset ring + opaque var(--card) fill so autofilled inputs
+   remain legible in both light and dark color schemes without layout shift. */
+input:is(:autofill, :-webkit-autofill) {
+  border-color: var(--ring);
+  box-shadow:
+    inset 0 0 0 2px color-mix(in oklab, var(--ring) 55%, transparent),
+    inset 0 0 0 100vmax var(--card);
+  -webkit-text-fill-color: var(--foreground);
+  caret-color: var(--foreground);
+}
+
+input:is(:autofill, :-webkit-autofill):focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+/* Legacy scrollbar fallback for older WebKit browsers per `dark-mode` */
+@supports not (scrollbar-color: auto) {
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-thumb);
+    border-radius: 9999px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--scrollbar-track);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

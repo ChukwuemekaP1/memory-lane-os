@@ -15,6 +15,7 @@ import {
   UserCheck,
 } from "lucide-react";
 
+import { ThemePreferencePicker } from "@/components/theme-toggle";
 import { Button } from "@/components/ui/button";
 import { FadeInUp, GlassCard } from "@/components/ui/motion";
 import { apiRequest } from "@/lib/api";
@@ -98,6 +99,18 @@ export default function AppAccountPage() {
             Verified Host
           </span>
         </div>
+      </GlassCard>
+
+      {/* Appearance (Light / Dark / System Color Scheme) */}
+      <GlassCard className="flex flex-col gap-4 p-6">
+        <div className="flex items-center gap-2">
+          <Sparkles className="h-5 w-5 text-[var(--primary)]" />
+          <h2 className="font-display text-2xl font-medium">Appearance</h2>
+        </div>
+        <p className="text-sm text-[var(--muted-foreground)]">
+          Choose between warm linen paper, candlelit obsidian dark mode, or your device preference.
+        </p>
+        <ThemePreferencePicker />
       </GlassCard>
 
       {/* Default Editorial Theme */}

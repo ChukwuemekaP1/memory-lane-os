@@ -6,6 +6,7 @@ import { FolderHeart, Home, Plus, Sparkles, User } from "lucide-react";
 
 import { BrandMark } from "@/components/brand-mark";
 import { APP_BOTTOM_TABS, MobileBottomNav } from "@/components/mobile-bottom-nav";
+import { ThemeToggle } from "@/components/theme-toggle";
 import { motion } from "@/components/ui/motion";
 
 const DESKTOP_LINKS = [
@@ -59,14 +60,17 @@ export function AppShell({ children }: { children: React.ReactNode }) {
             })}
           </nav>
 
-          <Link
-            href="/app/create"
-            className="inline-flex min-h-[40px] items-center gap-1.5 rounded-full bg-[var(--primary)] px-4 text-sm font-medium text-[var(--primary-foreground)] shadow-sm transition-all duration-200 hover:brightness-110 hover:shadow-md active:scale-[0.97]"
-          >
-            <Plus className="h-4 w-4" />
-            <span className="hidden sm:inline">New space</span>
-            <span className="sm:hidden">New</span>
-          </Link>
+          <div className="flex items-center gap-2">
+            <ThemeToggle />
+            <Link
+              href="/app/create"
+              className="inline-flex min-h-[40px] items-center gap-1.5 rounded-full bg-[var(--primary)] px-4 text-sm font-medium text-[var(--primary-foreground)] shadow-sm transition-all duration-200 hover:brightness-110 hover:shadow-md active:scale-[0.97]"
+            >
+              <Plus className="h-4 w-4" />
+              <span className="hidden sm:inline">New space</span>
+              <span className="sm:hidden">New</span>
+            </Link>
+          </div>
         </div>
       </header>
 

@@ -3,6 +3,7 @@
 import Link from "next/link";
 
 import { BrandMark } from "@/components/brand-mark";
+import { ThemeToggle } from "@/components/theme-toggle";
 
 /** Public-facing marketing & auth header (no mobile app bottom dock). */
 export function SiteHeader({
@@ -36,6 +37,7 @@ export function SiteHeader({
         </nav>
 
         <div className="flex items-center gap-1.5 sm:gap-2.5">
+          <ThemeToggle />
           <Link
             href="/login?mode=signin&next=/app"
             className="inline-flex min-h-[36px] items-center rounded-full px-3 text-xs font-medium text-[var(--muted-foreground)] transition-colors hover:text-[var(--foreground)] sm:min-h-[40px] sm:px-3.5 sm:text-sm"
