@@ -11,7 +11,7 @@
 export type AuthProviderName = "native" | "neon";
 
 export function activeAuthProvider(): AuthProviderName {
-  return process.env.NEXT_PUBLIC_AUTH_PROVIDER === "neon" ? "neon" : "native";
+  return process.env.NEXT_PUBLIC_AUTH_PROVIDER === "native" ? "native" : "neon";
 }
 
 let cachedToken: { value: string; expiresAtMs: number } | null = null;

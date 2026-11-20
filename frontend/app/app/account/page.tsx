@@ -95,7 +95,7 @@ export default function AppAccountPage() {
           </div>
           <span className="inline-flex items-center gap-1.5 rounded-full bg-[var(--sage)] px-3 py-1 text-xs font-semibold text-[var(--primary)]">
             <UserCheck className="h-3.5 w-3.5" />
-            Neon Managed Auth
+            Verified Host
           </span>
         </div>
       </GlassCard>
@@ -177,7 +177,7 @@ export default function AppAccountPage() {
               Enable AI Memory Studio by default
             </strong>
             <span className="block text-xs text-[var(--muted-foreground)]">
-              Automatically opt new spaces into OpenRouter summaries, transcripts, and keepsakes.
+              Automatically opt new spaces into AI summaries, transcripts, and keepsakes.
             </span>
           </span>
         </label>
@@ -217,7 +217,7 @@ export default function AppAccountPage() {
         <div>
           <h2 className="font-display text-2xl font-medium">Security &amp; session</h2>
           <p className="mt-1 text-sm text-[var(--muted-foreground)]">
-            Manage your Neon Auth password or sign out of this browser.
+            Update your password or sign out of this browser.
           </p>
         </div>
         <div className="flex flex-wrap gap-2.5">

@@ -33,11 +33,11 @@ export default function AppStudioHubPage() {
   return (
     <div className="flex flex-col gap-6">
       <FadeInUp>
-        <p className="eyebrow text-[var(--bronze)]">Powered by OpenRouter</p>
+        <p className="eyebrow text-[var(--bronze)]">Keepsake Atelier</p>
         <h1 className="mt-1 font-display text-4xl font-medium">AI Memory Studio</h1>
         <p className="mt-2 max-w-xl text-sm text-[var(--muted-foreground)]">
           Choose a memory space to generate summaries, smart categories, photo captions, voice note
-          transcripts, memory letters, digital books, artwork, and FFmpeg highlight films.
+          transcripts, memory letters, digital books, artwork, and highlight films.
         </p>
       </FadeInUp>
 

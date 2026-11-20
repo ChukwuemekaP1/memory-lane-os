@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { FolderHeart, Home, Plus, Sparkles, User } from "lucide-react";
 
+import { BrandMark } from "@/components/brand-mark";
 import { APP_BOTTOM_TABS, MobileBottomNav } from "@/components/mobile-bottom-nav";
 import { motion } from "@/components/ui/motion";
 
@@ -21,13 +22,9 @@ export function AppShell({ children }: { children: React.ReactNode }) {
     <div className="min-h-screen pb-24 md:pb-12">
       <header className="glass-nav sticky top-0 z-40">
         <div className="site-frame flex h-16 items-center justify-between gap-4">
-          <Link href="/app" className="group inline-flex items-center gap-3">
-            <span className="flex h-9 w-9 items-center justify-center rounded-full bg-[var(--primary)] font-display text-sm font-semibold tracking-tight text-[var(--primary-foreground)] shadow-sm transition-transform duration-200 group-hover:scale-105">
-              ML
-            </span>
-            <span className="font-display text-xl font-medium tracking-tight text-[var(--foreground)]">
-              Memory Lane
-            </span>
+          <Link href="/app" className="group inline-flex items-center">
+            <BrandMark size="sm" className="sm:hidden" />
+            <BrandMark size="md" className="hidden sm:inline-flex" />
           </Link>
 
           <nav aria-label="App navigation" className="hidden items-center gap-1 md:flex">

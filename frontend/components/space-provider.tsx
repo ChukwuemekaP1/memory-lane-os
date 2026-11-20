@@ -16,6 +16,7 @@ import {
   Tv,
 } from "lucide-react";
 
+import { BrandMark } from "@/components/brand-mark";
 import { buildSpaceBottomTabs, MobileBottomNav } from "@/components/mobile-bottom-nav";
 import { SiteHeader } from "@/components/site-header";
 import { motion } from "@/components/ui/motion";
@@ -128,12 +129,9 @@ export function SpaceProvider({
             <div className="flex items-center gap-3">
               <Link
                 href={isStaff ? "/app" : "/"}
-                className="group flex items-center gap-2.5 text-lg font-medium tracking-tight"
+                className="group inline-flex items-center"
               >
-                <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[var(--primary)] text-[var(--primary-foreground)] shadow-sm transition-transform duration-300 group-hover:scale-105">
-                  <Sparkles className="h-4 w-4" />
-                </span>
-                <span className="font-display text-xl">Memory Lane</span>
+                <BrandMark size="sm" />
               </Link>
               {isStaff && (
                 <Link

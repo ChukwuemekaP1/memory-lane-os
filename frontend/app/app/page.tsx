@@ -71,7 +71,7 @@ export default function AppHomePage() {
       <GlassCard className="mx-auto max-w-md p-8 text-center">
         <p className="font-display text-2xl font-medium">Sign in to enter Memory Lane</p>
         <p className="mt-2 text-sm text-[var(--muted-foreground)]">
-          Access your albums, curation queue, and OpenRouter AI Memory Studio.
+          Access your albums, curation queue, and AI Memory Studio.
         </p>
         <div className="mt-5">
           <Link

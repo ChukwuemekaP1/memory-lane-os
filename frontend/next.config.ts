@@ -8,6 +8,7 @@ const nextConfig: NextConfig = {
   ...(process.env.VERCEL ? {} : { output: "standalone" }),
   env: {
     NEXT_PUBLIC_API_BASE_URL: process.env.NEXT_PUBLIC_API_BASE_URL ?? "/api",
+    NEXT_PUBLIC_AUTH_PROVIDER: process.env.NEXT_PUBLIC_AUTH_PROVIDER ?? "neon",
   },
   // Same-origin API proxy: fallback runs after Next.js App Router route
   // handlers (so /api/auth/* hits Neon Auth's route handler while /api/v1/*,

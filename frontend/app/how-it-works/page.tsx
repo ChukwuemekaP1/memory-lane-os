@@ -27,7 +27,7 @@ const STEPS = [
     step: "04",
     icon: CalendarClock,
     title: "Scheduled reveals & AI Keepsake Studio",
-    body: "Lock the album with a countdown until the big day, then use the OpenRouter-powered AI Studio to craft summaries, transcripts, memory letters, digital books, and highlight films.",
+    body: "Lock the album with a countdown until the big day, then use the built-in AI Studio to craft summaries, transcripts, memory letters, digital books, and highlight films.",
   },
 ];
 
@@ -81,8 +81,8 @@ export default function HowItWorksPage() {
             <div>
               <h2 className="font-display text-2xl font-medium">Private by default</h2>
               <p className="mt-1 text-sm text-[var(--muted-foreground)]">
-                Original photos, videos, and voice notes stay in private Neon Object Storage behind
-                short-lived signed URLs. Private owner messages never enter shared AI processing.
+                Original photos, videos, and voice notes stay in encrypted private storage behind
+                short-lived secure links. Private host messages never enter shared AI processing.
               </p>
             </div>
           </div>
