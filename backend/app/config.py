@@ -7,10 +7,10 @@ See /.env.example for the full variable list.
 from __future__ import annotations
 
 from functools import lru_cache
-from typing import Literal
+from typing import Annotated, Any, Literal
 
 from pydantic import Field, field_validator, model_validator
-from pydantic_settings import BaseSettings, SettingsConfigDict
+from pydantic_settings import BaseSettings, NoDecode, SettingsConfigDict
 
 
 class Settings(BaseSettings):
@@ -64,7 +64,9 @@ class Settings(BaseSettings):
     otp_ttl_minutes: int = 10
     otp_max_attempts: int = 5
     magic_link_ttl_minutes: int = 10
-    allowed_origins: list[str] = Field(default_factory=lambda: ["http://localhost:3000"])
+    allowed_origins: Annotated[list[str], NoDecode] = Field(
+        default_factory=lambda: ["http://localhost:3000"]
+    )
 
     # Neon Auth (Better Auth) JWT verification. Disabled by default; when
     # enabled, JWT-shaped bearers verify against the JWKS (inline JSON wins,
@@ -110,11 +112,49 @@ class Settings(BaseSettings):
     log_level: str = "INFO"
     log_json: bool = True
 
-    @field_validator("database_url")
+    @field_validator("allowed_origins", mode="before")
+    @classmethod
+    def _parse_allowed_origins(cls, value: Any) -> list[str]:
+        import json
+
+        if value is None:
+            return ["http://localhost:3000"]
+        if isinstance(value, list):
+            return [str(v).strip() for v in value if str(v).strip()]
+        if isinstance(value, str):
+            raw = value.strip()
+            if not raw:
+                return ["http://localhost:3000"]
+            if raw.startswith("["):
+                try:
+                    parsed = json.loads(raw)
+                    if isinstance(parsed, list):
+                        return [str(v).strip() for v in parsed if str(v).strip()]
+                except json.JSONDecodeError:
+                    raw = raw.strip("[]")
+            return [
+                item.strip().strip('"').strip("'")
+                for item in raw.split(",")
+                if item.strip().strip('"').strip("'")
+            ]
+        return [str(value)]
+
+    @field_validator("database_url", mode="before")
     @classmethod
     def _check_db_scheme(cls, value: str) -> str:
-        if not value.startswith(("postgresql+asyncpg://", "postgresql+psycopg://", "sqlite+aiosqlite://")):
-            raise ValueError("database_url must use postgresql+asyncpg, postgresql+psycopg, or sqlite+aiosqlite")
+        if isinstance(value, str):
+            raw = value.strip()
+            if raw.startswith("postgres://"):
+                raw = "postgresql+asyncpg://" + raw[len("postgres://") :]
+            elif raw.startswith("postgresql://"):
+                raw = "postgresql+asyncpg://" + raw[len("postgresql://") :]
+            if not raw.startswith(
+                ("postgresql+asyncpg://", "postgresql+psycopg://", "sqlite+aiosqlite://")
+            ):
+                raise ValueError(
+                    "database_url must use postgresql+asyncpg, postgresql+psycopg, or sqlite+aiosqlite"
+                )
+            return raw
         return value
 
     @field_validator("session_cookie_secure")
