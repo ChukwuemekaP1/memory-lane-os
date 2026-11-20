@@ -1,0 +1,13 @@
+{
+  "name": "memory-lane",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Memory Lane collaborative memory platform (root: Neon tooling + build entrypoint).",
+  "scripts": {
+    "build": "npm --prefix frontend run build",
+    "neon:deploy": "neon deploy"
+  },
+  "devDependencies": {
+    "@neon/config": "1.1.0"
+  }
+}

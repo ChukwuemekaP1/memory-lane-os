@@ -1,0 +1,85 @@
+[project]
+name = "memorylane-api"
+version = "0.1.0"
+description = "Memory Lane collaborative memory platform API (FastAPI modular monolith)."
+requires-python = ">=3.12"
+dependencies = [
+  "fastapi>=0.162",
+  "uvicorn[standard]>=0.54",
+  "sqlalchemy>=2.1",
+  "alembic>=1.20",
+  "asyncpg>=0.31",
+  "psycopg[binary]>=3.3",
+  "pydantic>=2.14",
+  "pydantic-settings>=2.16",
+  "python-dotenv>=1.2",
+  "redis>=8.1",
+  "arq>=0.26",
+  "email-validator>=2.3",
+  "python-multipart>=0.0.32",
+  "httpx>=0.28",
+  "tenacity>=9.1",
+  "boto3>=1.43",
+  "pyjwt>=2.10",
+  "cryptography>=44",
+  "tzdata>=2024.1",
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=9.2",
+  "pytest-asyncio>=1.4",
+  "pytest-cov>=7.1",
+  "ruff>=0.16",
+  "mypy>=1.18",
+]
+test = ["memorylane-api[dev]"]
+
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["app*", "alembic*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "function"
+markers = [
+  "needs_pg: requires a reachable PostgreSQL (skipped otherwise)",
+  "needs_redis: requires a reachable Redis (skipped otherwise)",
+]
+addopts = "-ra -q"
+
+[tool.coverage.run]
+source = ["app"]
+omit = ["app/worker.py", "alembic/*"]
+
+[tool.coverage.report]
+fail_under = 70
+show_missing = true
+
+[tool.ruff]
+target-version = "py312"
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "S", "N", "A", "C4", "DTZ"]
+ignore = ["S101", "S105", "S106"]
+
+[tool.ruff.lint.flake8-blind-except]
+blind-except = ["Exception"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**/*" = ["S101", "S106", "DTZ"]
+"alembic/**/*" = ["S101"]
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+ignore_missing_imports = true
+
+[tool.alembic]
+script_location = "alembic"

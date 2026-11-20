@@ -1,0 +1,139 @@
+name: memorylane
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-memorylane}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-memorylane}
+      POSTGRES_DB: ${POSTGRES_DB:-memorylane_dev}
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-memorylane}"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "${REDIS_PORT:-6379}:6379"
+    volumes:
+      - redisdata:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  minio:
+    image: minio/minio:latest
+    command: server /data --console-address ":9001"
+    environment:
+      MINIO_ROOT_USER: ${MINIO_ROOT_USER:-minioadmin}
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD:-minioadmin}
+    ports:
+      - "${MINIO_PORT:-9000}:9000"
+      - "${MINIO_CONSOLE_PORT:-9001}:9001"
+    volumes:
+      - miniodata:/data
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
+      interval: 10s
+      timeout: 5s
+      retries: 6
+
+  minio-init:
+    image: minio/mc:latest
+    depends_on:
+      minio:
+        condition: service_healthy
+    entrypoint: >
+      /bin/sh -c "
+      mc alias set local http://minio:9000 ${MINIO_ROOT_USER:-minioadmin} ${MINIO_ROOT_PASSWORD:-minioadmin} &&
+      mc mb --ignore-existing local/memorylane-originals &&
+      mc mb --ignore-existing local/memorylane-derivatives &&
+      echo buckets-ready
+      "
+    networks: [default]
+
+  mailpit:
+    image: axllent/mailpit:latest
+    ports:
+      - "${MAILPIT_SMTP_PORT:-1025}:1025"
+      - "${MAILPIT_HTTP_PORT:-8025}:8025"
+    environment:
+      MP_MAX_MESSAGES: "500"
+
+  api:
+    build: ./backend
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      minio-init:
+        condition: service_completed_successfully
+    environment:
+      ENVIRONMENT: local
+      DATABASE_URL: postgresql+asyncpg://${POSTGRES_USER:-memorylane}:${POSTGRES_PASSWORD:-memorylane}@postgres:5432/${POSTGRES_DB:-memorylane_dev}
+      REDIS_URL: redis://redis:6379/0
+      STORAGE_DRIVER: s3
+      S3_ENDPOINT_URL: http://minio:9000
+      S3_ACCESS_KEY: ${MINIO_ROOT_USER:-minioadmin}
+      S3_SECRET_KEY: ${MINIO_ROOT_PASSWORD:-minioadmin}
+      MAIL_DRIVER: smtp
+      SMTP_HOST: mailpit
+      SMTP_PORT: 1025
+      MAIL_FROM: ${MAIL_FROM:-Memory Lane <hello@example.com>}
+      FRONTEND_BASE_URL: http://localhost:3000
+      JOBS_DRIVER: arq
+      LOG_LEVEL: ${LOG_LEVEL:-INFO}
+    ports:
+      - "${API_PORT:-8000}:8000"
+    volumes:
+      - ./backend/app:/srv/api/app:ro
+      - ./backend/alembic:/srv/api/alembic:ro
+    command: ["sh", "-c", "python -m alembic upgrade head && python -m uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload"]
+
+  worker:
+    build: ./backend
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    environment:
+      ENVIRONMENT: local
+      DATABASE_URL: postgresql+asyncpg://${POSTGRES_USER:-memorylane}:${POSTGRES_PASSWORD:-memorylane}@postgres:5432/${POSTGRES_DB:-memorylane_dev}
+      REDIS_URL: redis://redis:6379/0
+      STORAGE_DRIVER: s3
+      S3_ENDPOINT_URL: http://minio:9000
+      S3_ACCESS_KEY: ${MINIO_ROOT_USER:-minioadmin}
+      S3_SECRET_KEY: ${MINIO_ROOT_PASSWORD:-minioadmin}
+      MAIL_DRIVER: smtp
+      SMTP_HOST: mailpit
+      SMTP_PORT: 1025
+      JOBS_DRIVER: arq
+      LOG_LEVEL: ${LOG_LEVEL:-INFO}
+    command: ["python", "-m", "app.worker"]
+    volumes:
+      - ./backend/app:/srv/api/app:ro
+
+  web:
+    build: ./frontend
+    depends_on:
+      - api
+    environment:
+      NEXT_PUBLIC_API_BASE_URL: /api
+      API_INTERNAL_URL: http://api:8000
+    ports:
+      - "${WEB_PORT:-3000}:3000"
+
+volumes:
+  pgdata:
+  redisdata:
+  miniodata:

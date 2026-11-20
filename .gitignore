@@ -1,0 +1,42 @@
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.coverage
+htmlcov/
+.mypy_cache/
+.ruff_cache/
+*.egg-info/
+dist/
+build/
+
+# Virtualenvs
+.venv/
+venv/
+
+# Node
+node_modules/
+.next/
+out/
+coverage/
+playwright-report/
+test-results/
+*.tsbuildinfo
+
+# Env & secrets
+.env
+.env.local
+!.env.example
+frontend/.env
+frontend/.env.local
+
+# Local dev data (postgres clusters, mail, storage)
+.devdata/
+
+# OS / editors
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
+.neon
