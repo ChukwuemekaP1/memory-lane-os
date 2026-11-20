@@ -283,7 +283,7 @@ export function SpaceCoverBand({ spaceId }: { spaceId: string }) {
           <div className="shrink-0">
             <SpaceLink
               href={`/s/${spaceId}/contribute`}
-              className="inline-flex min-h-[46px] items-center gap-2 rounded-full bg-[var(--primary-foreground)] px-6 text-sm font-semibold text-[var(--foreground)] shadow-lg transition-all duration-200 hover:scale-[1.02] hover:bg-white active:scale-[0.98]"
+              className="inline-flex min-h-[46px] items-center gap-2 rounded-full bg-white px-6 text-sm font-semibold text-[#17231B] shadow-lg transition-all duration-200 hover:scale-[1.02] hover:bg-[#FAF6EE] active:scale-[0.98]"
             >
               <Plus className="h-4 w-4" />
               Add your memory

@@ -83,17 +83,17 @@ export default function HomePage() {
               <Sparkles className="h-3 w-3" />
               Collaborative Keepsake Albums
             </span>
-            <h1 className="font-display text-[40px] font-medium leading-[1.06] tracking-tight text-[var(--primary-foreground)] sm:text-6xl lg:text-[72px]">
+            <h1 className="font-display text-[40px] font-medium leading-[1.06] tracking-tight text-white sm:text-6xl lg:text-[72px]">
               Gather every voice, photo &amp; story in one warm place.
             </h1>
-            <p className="mt-4 max-w-lg text-[15px] leading-relaxed text-[var(--primary-foreground)]/85 sm:mt-6 sm:text-lg">
+            <p className="mt-4 max-w-lg text-[15px] leading-relaxed text-white/85 sm:mt-6 sm:text-lg">
               Create a private memory album for weddings, birthdays, graduations, and family
               milestones. Guests contribute in seconds from one link — no app or account needed.
             </p>
             <div className="mt-7 flex flex-col gap-2.5 sm:mt-9 sm:flex-row sm:items-center sm:gap-3.5">
               <Link
                 href="/login?mode=signup&next=/app/create"
-                className="inline-flex min-h-[46px] items-center justify-center gap-2 rounded-full bg-[var(--primary-foreground)] px-6 text-sm font-semibold text-[var(--foreground)] shadow-lg transition-all duration-200 hover:scale-[1.02] hover:bg-white active:scale-[0.98]"
+                className="inline-flex min-h-[46px] items-center justify-center gap-2 rounded-full bg-white px-6 text-sm font-semibold text-[#17231B] shadow-lg transition-all duration-200 hover:scale-[1.02] hover:bg-[#FAF6EE] active:scale-[0.98]"
               >
                 Start a space
                 <ArrowRight className="h-4 w-4" />
@@ -233,7 +233,7 @@ export default function HomePage() {
             <div className="mt-6 flex flex-wrap justify-center gap-3">
               <Link
                 href="/login?mode=signup&next=/app/create"
-                className="inline-flex min-h-[44px] items-center gap-2 rounded-full bg-[var(--primary-foreground)] px-6 text-sm font-semibold text-[var(--foreground)] shadow-md transition-all hover:scale-[1.02] hover:bg-white"
+                className="inline-flex min-h-[44px] items-center gap-2 rounded-full bg-white px-6 text-sm font-semibold text-[#17231B] shadow-md transition-all hover:scale-[1.02] hover:bg-[#FAF6EE]"
               >
                 Create your first space
                 <ArrowRight className="h-4 w-4" />
